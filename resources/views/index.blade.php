@@ -8,6 +8,53 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
-
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header clearfix">
+                <a class="btn btn-primary float-right" href="{{route("view_add")}}" role="button">Add list</a>
+            </div>
+            <div class="card-body overflow-auto">
+                <table class="table table-striped">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>#</th>
+                            <th>Logo</th>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Stars</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($list as $bs)
+                            <tr>
+                                <td scope="row">{{$bs->id}}</td>
+                                <td style="width:16em">@if ($bs->logo)
+                                    <img class="w-100" src="{{asset("logo/" . $bs->logo)}}" />
+                                @endif</td>
+                                <td>{{$bs->name}}</td>
+                                <td style="max-width:20em">{{$bs->location}}</td>
+                                <td style="width:12em;">@for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $bs->stars)
+                                    <span class="material-icons" style="color:#f1c40f;">star</span>
+                                    @else
+                                    <span class="material-icons text-secondary">star</span>
+                                    @endif
+                                @endfor</td>
+                                <td style="width:11em;">
+                                    <a class="btn btn-primary" href="{{route("view_edit", $bs->id)}}" role="button">Edit</a>
+                                    <form class="d-inline-block" action="{{route("delete", $bs->id)}}" method="post">
+                                        @method("delete")
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
