@@ -20,6 +20,11 @@ Route::post('/add', "barbershopController@add")->name("add");
 Route::patch('/item/{id}', "barbershopController@edit")->name("edit");
 Route::delete('/item/{id}', "barbershopController@delete")->name("delete");
 
+Route::get('/barbershop/{id}', "StyleController@index")->name("style_index");
+Route::post('/barbershop/{id}', "StyleController@add")->name("style_add");
+Route::patch('/barbershop/style/{id}', "StyleController@edit")->name("style_edit");
+Route::delete('/barbershop/style/{id}', "StyleController@delete")->name("style_delete");
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });

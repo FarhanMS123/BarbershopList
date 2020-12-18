@@ -64,14 +64,21 @@ class barbershopController extends Controller
             "stars"=> $req->stars
         ];
 
+        $bs = barbershop::findOrFail($id);
+
         if($req->hasFile("logo") && $req->file('logo')->isValid()){
+            $filename = public_path("logo" . "/" . $bs->logo);
+            if(File::exists($filename)){
+                File::delete($filename);
+            }
+
             $file = $req->file("logo");
             $filename = time() . "_" . rand(10000,99999) . "_" . $file->getClientOriginalName();
             $req->file("logo")->move(public_path("logo"), $filename);
             $data["logo"] = $filename;
         }
 
-        barbershop::findOrFail($id)->update($data);
+        $bs->update($data);
         return redirect("/");
     }
 

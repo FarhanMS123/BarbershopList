@@ -20,6 +20,7 @@
                             <th>#</th>
                             <th>Logo</th>
                             <th>Name</th>
+                            <th>Styles</th>
                             <th>Location</th>
                             <th>Stars</th>
                             <th>Action</th>
@@ -32,7 +33,20 @@
                                 <td style="width:16em">@if ($bs->logo)
                                     <img class="w-100" src="{{asset("logo/" . $bs->logo)}}" />
                                 @endif</td>
-                                <td>{{$bs->name}}</td>
+                                <td><a href="{{route("style_index", $bs->id)}}">{{$bs->name}}</a></td>
+                                <td>
+                                    @if (count($bs->styles) > 0)
+                                        @for($i=0; $i<count($bs->styles); $i++)
+                                            @if ($i == 0)
+                                                {{ $bs->styles[$i]->name }}
+                                            @else
+                                                , {{ $bs->styles[$i]->name }}
+                                            @endif
+                                        @endfor
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                                 <td style="max-width:20em">{{$bs->location}}</td>
                                 <td style="width:12em;">@for ($i = 1; $i <= 5; $i++)
                                     @if ($i <= $bs->stars)
