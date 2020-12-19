@@ -90,6 +90,7 @@
                 </form>
             </div>
         </div>
+        @if (count($bs->styles) > 0)
         <div class="card mb-4 shadow-sm">
             <div class="card-body">
                 <table class="table table-striped">
@@ -114,6 +115,7 @@
                 </table>
             </div>
         </div>
+        @endif
     </div>
 </body>
 </html>
