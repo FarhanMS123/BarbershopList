@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,13 +7,17 @@
     <title>Barbershop List</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
-<body>
+<body> --}}
+    @extends('layouts.app')
+    @section('content')
     <div class="container mt-5">
         <div class="card shadow-sm">
             @auth
+            @if(Auth::user()->isAdmin)
             <div class="card-header clearfix">
                 <a class="btn btn-primary float-right" href="{{route("view_add")}}" role="button">Add list</a>
             </div>
+            @endif
             @endauth
             <div class="card-body overflow-auto">
                 <table class="table table-striped">
@@ -25,7 +29,7 @@
                             <th>Styles</th>
                             <th>Location</th>
                             <th>Stars</th>
-                            @auth<th>Action</th>@endauth
+                            @auth @if(Auth::user()->isAdmin)<th>Action</th>@endif @endauth
                         </tr>
                         </thead>
                         <tbody>
@@ -58,6 +62,7 @@
                                     @endif
                                 @endfor</td>
                                 @auth
+                                @if(Auth::user()->isAdmin)
                                 <td style="width:11em;">
                                     <a class="btn btn-primary" href="{{route("view_edit", $bs->id)}}" role="button">Edit</a>
                                     <form class="d-inline-block" action="{{route("delete", $bs->id)}}" method="post">
@@ -66,6 +71,7 @@
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
                                 </td>
+                                @endif
                                 @endauth
                             </tr>
                         @endforeach
@@ -74,5 +80,6 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+    @endsection
+{{-- </body>
+</html> --}}
