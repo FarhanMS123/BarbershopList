@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +15,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', "barbershopController@index")->name("index");
-Route::get('/add', "barbershopController@view_add")->name("view_add");
-Route::get('/view/{id}', "barbershopController@view_edit")->name("view_edit");
-Route::post('/add', "barbershopController@add")->name("add");
-Route::patch('/item/{id}', "barbershopController@edit")->name("edit");
-Route::delete('/item/{id}', "barbershopController@delete")->name("delete");
 
-Route::get('/barbershop/{id}', "StyleController@index")->name("style_index");
-Route::post('/barbershop/{id}', "StyleController@add")->name("style_add");
-Route::patch('/barbershop/style/{id}', "StyleController@edit")->name("style_edit");
-Route::delete('/barbershop/style/{id}', "StyleController@delete")->name("style_delete");
+Route::middleware("auth")->group(function(){
+    Route::get('/view/{id}', "barbershopController@view_edit")->name("view_edit");
+    Route::get('/add', "barbershopController@view_add")->name("view_add");
+    Route::post('/add', "barbershopController@add")->name("add");
+    Route::patch('/item/{id}', "barbershopController@edit")->name("edit");
+    Route::delete('/item/{id}', "barbershopController@delete")->name("delete");
+});
+
+Route::middleware("auth")->group(function(){
+    Route::get('/barbershop/{id}', "StyleController@index")->name("style_index");
+    Route::post('/barbershop/{id}', "StyleController@add")->name("style_add");
+    Route::patch('/barbershop/style/{id}', "StyleController@edit")->name("style_edit");
+    Route::delete('/barbershop/style/{id}', "StyleController@delete")->name("style_delete");
+});
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

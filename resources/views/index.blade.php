@@ -10,9 +10,11 @@
 <body>
     <div class="container mt-5">
         <div class="card shadow-sm">
+            @auth
             <div class="card-header clearfix">
                 <a class="btn btn-primary float-right" href="{{route("view_add")}}" role="button">Add list</a>
             </div>
+            @endauth
             <div class="card-body overflow-auto">
                 <table class="table table-striped">
                     <thead class="thead-inverse">
@@ -23,7 +25,7 @@
                             <th>Styles</th>
                             <th>Location</th>
                             <th>Stars</th>
-                            <th>Action</th>
+                            @auth<th>Action</th>@endauth
                         </tr>
                         </thead>
                         <tbody>
@@ -55,6 +57,7 @@
                                     <span class="material-icons text-secondary">star</span>
                                     @endif
                                 @endfor</td>
+                                @auth
                                 <td style="width:11em;">
                                     <a class="btn btn-primary" href="{{route("view_edit", $bs->id)}}" role="button">Edit</a>
                                     <form class="d-inline-block" action="{{route("delete", $bs->id)}}" method="post">
@@ -63,6 +66,7 @@
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
                                 </td>
+                                @endauth
                             </tr>
                         @endforeach
                         </tbody>
