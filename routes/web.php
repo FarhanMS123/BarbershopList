@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', "barbershopController@index")->name("index");
 
-Route::middleware("auth")->group(function(){
+Route::middleware(["auth", "admin"])->group(function(){
     Route::get('/view/{id}', "barbershopController@view_edit")->name("view_edit");
     Route::get('/add', "barbershopController@view_add")->name("view_add");
     Route::post('/add', "barbershopController@add")->name("add");
